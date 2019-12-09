@@ -129,15 +129,35 @@ const lookup: RPELookup[] = [
 
 const roundHalf = (num: number): number => Math.round(num * 2) / 2;
 
-const loadPercent = (reps: number, rpe: number): number => {
+const loadPercent = (reps: number, rpe: number): number | null => {
     const roundedReps = Math.floor(reps);
     const roundedRpe = roundHalf(rpe);
 
     const rpeLookup = lookup.find((item: RPELookup) => item.rpe === roundedRpe && item.reps === roundedReps);
 
-    return rpeLookup.loadPercent;
+    if (typeof rpeLookup !== 'undefined') {
+        return rpeLookup.loadPercent;
+    }
+
+    return null;
 };
 
-export const oneRepMax = (weight: number, reps: number, rpe: number): number => weight / loadPercent(reps, rpe);
+export const oneRepMax = (weight: number, reps: number, rpe: number): number | null => {
+    const lPercent = loadPercent(reps, rpe);
 
-export const load = (oneRepMax: number, reps: number, rpe: number): number => oneRepMax * loadPercent(reps, rpe);
+    if (lPercent !== null) {
+       return weight / lPercent;
+    }
+
+    return null;
+};
+
+export const load = (oneRepMax: number, reps: number, rpe: number): number | null => {
+    const lPercent = loadPercent(reps, rpe);
+
+    if (lPercent !== null) {
+        return oneRepMax * lPercent;
+    }
+
+    return null;
+};
