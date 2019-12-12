@@ -1,7 +1,7 @@
 import { oneRepMax, load } from './rpeCalc';
 import { RPETableItem } from '../types';
 
-export const rpeTable = (weight: number, reps: number, rpe: number): RPETableItem[] => {
+const rpeTable = (weight: number, reps: number, rpe: number): RPETableItem[] => {
     const result = [];
 
     const isInValidRepRange = reps > 0 && reps <= 12;
@@ -34,3 +34,5 @@ export const rpeTable = (weight: number, reps: number, rpe: number): RPETableIte
 
     return result;
 };
+
+export default rpeTable;
