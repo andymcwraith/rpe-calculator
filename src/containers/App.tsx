@@ -76,6 +76,7 @@ class App extends React.PureComponent<{}, State> {
                     weight={this.state.weight}
                     reps={this.state.reps}
                     rpe={this.state.rpe}
+                    results={this.state.results}
                     weightInputChangeHandler={this.handleWeightInputChange}
                     repsInputChangeHandler={this.handleRepsInputChange}
                     rpeInputChangeHandler={this.handleRpeInputChange}
