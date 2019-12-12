@@ -10,7 +10,7 @@ const rpeTable = (weight: number, reps: number, rpe: number): RPETableItem[] => 
     if (isInValidRpeRange && isInValidRepRange) {
         const oneRM = oneRepMax(weight, reps, rpe);
 
-        const repsArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12];
+        const repsArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
         const rpeArray = [6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10];
 
         if (oneRM !== null) {
