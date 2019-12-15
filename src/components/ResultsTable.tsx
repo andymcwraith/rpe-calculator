@@ -4,6 +4,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import { makeStyles } from '@material-ui/core/styles'
 
 import { RPETableItem } from '../types';
 
@@ -20,6 +21,13 @@ const getLoad = (rpe: number, reps: number, results: RPETableItem[]): number | n
 
     return item.load;
 };
+
+const useStyles = makeStyles({
+    table: {
+        maxWidth: '100%',
+        margin: '1em',
+    },
+});
 
 const tableHeadRow = (repCounts: number[]): JSX.Element => {
     const repCountCells = repCounts
@@ -68,6 +76,8 @@ const tableBodyRow = (rpe: number, repCounts: number[], results: RPETableItem[])
 const ResultsTable: React.FC<Props> = props => {
     const { results } = props;
 
+    const classes = useStyles();
+
     if (results.length > 0) {
         const repsArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
         const rpeArray = [6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10];
@@ -78,7 +88,7 @@ const ResultsTable: React.FC<Props> = props => {
             .map(rpe => tableBodyRow(rpe, repsArray, results));
 
         return (
-            <Table>
+            <Table className={classes.table}>
                 <TableHead>
                     {tableHeadRow(repsArray)}
                 </TableHead>
