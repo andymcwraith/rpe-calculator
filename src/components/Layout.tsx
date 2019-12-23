@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper'
 
 import RepsInput from './RepsInput';
 import RpeInput from './RpeInput';
@@ -35,9 +34,7 @@ const Layout: React.FC<Props> = props => {
                     <RpeInput value={props.rpe} onChangeHandler={props.rpeInputChangeHandler} />
                 </Grid>
                 <Grid item={true} xs={12}>
-                    <Paper>
-                        <ResultsTable results={props.results} />
-                    </Paper>
+                    <ResultsTable results={props.results} />
                 </Grid>
             </Grid>
         </Container>

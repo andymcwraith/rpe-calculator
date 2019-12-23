@@ -26,6 +26,15 @@ const useStyles = makeStyles({
     table: {
         maxWidth: '100%',
         margin: '1em',
+        whiteSpace: 'nowrap',
+    },
+    tableContainer: {
+        position: 'relative',
+    },
+    tableScroller: {
+        overflowX: 'scroll',
+        overflowY: 'visible',
+        marginLeft: '100px',
     },
 });
 
@@ -38,9 +47,18 @@ const tableHeadRow = (repCounts: number[]): JSX.Element => {
         return <TableCell key={`${repCount}-head-cell`}>{text}</TableCell>;
     });
 
+    const stickyColumnstyle: React.CSSProperties = {
+        position: 'absolute',
+        left: 0,
+        top: 'auto',
+        border: 'none',
+        width: '100px',
+        padding: '16px 0',
+    };
+
     return (
         <TableRow>
-            <TableCell key="blank-head-cell" />
+            <TableCell key="blank-head-cell" style={stickyColumnstyle} />
             {repCountCells}
         </TableRow>
     );
@@ -49,6 +67,15 @@ const tableHeadRow = (repCounts: number[]): JSX.Element => {
 const tableBodyRow = (rpe: number, repCounts: number[], results: RPETableItem[]): JSX.Element => {
     // @todo later weight unit will be changeable
     const unit = 'kgs';
+    const stickyColumnstyle: React.CSSProperties = {
+        position: 'absolute',
+        left: 0,
+        top: 'auto',
+        width: '100px',
+        padding: '16px 0',
+        textAlign: 'center',
+        fontWeight: 500,
+    };
 
     const cells = repCounts
         .sort((a, b) => a - b)
@@ -67,7 +94,7 @@ const tableBodyRow = (rpe: number, repCounts: number[], results: RPETableItem[])
 
     return (
         <TableRow>
-            <TableCell key={`rpe-${rpe}-ref`}>{rpe} RPE</TableCell>
+            <TableCell style={stickyColumnstyle} key={`rpe-${rpe}-ref`}>{rpe} RPE</TableCell>
             {cells}
         </TableRow>
     );
@@ -88,14 +115,19 @@ const ResultsTable: React.FC<Props> = props => {
             .map(rpe => tableBodyRow(rpe, repsArray, results));
 
         return (
-            <Table className={classes.table}>
-                <TableHead>
-                    {tableHeadRow(repsArray)}
-                </TableHead>
-                <TableBody>
-                    {tableBodyRows}
-                </TableBody>
-            </Table>
+            <div className={classes.tableContainer}>
+                <div className={classes.tableScroller}>
+                    <Table className={classes.table}>
+                        <TableHead>
+                            {tableHeadRow(repsArray)}
+                        </TableHead>
+                        <TableBody>
+                            {tableBodyRows}
+                        </TableBody>
+                    </Table>
+                </div>
+            </div>
+            
         );
     }
 
