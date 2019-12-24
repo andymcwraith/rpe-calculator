@@ -4,7 +4,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { makeStyles } from '@material-ui/core/styles'
+import { createStyles, makeStyles, withStyles, Theme } from '@material-ui/core/styles'
 
 import { RPETableItem } from '../types';
 
@@ -25,18 +25,60 @@ const getLoad = (rpe: number, reps: number, results: RPETableItem[]): number | n
 const useStyles = makeStyles({
     table: {
         maxWidth: '100%',
-        margin: '1em',
+        margin: 0,
         whiteSpace: 'nowrap',
     },
     tableContainer: {
         position: 'relative',
+        marginTop: '1em',
     },
     tableScroller: {
         overflowX: 'scroll',
         overflowY: 'visible',
         marginLeft: '100px',
+        borderRight: '1px solid rgba(224, 224, 224, 1)',
     },
 });
+
+const BlackTableCell = withStyles((theme: Theme) => {
+    return createStyles({
+        head: {
+            backgroundColor: theme.palette.common.black,
+            color: theme.palette.common.white,
+        },
+        body: {
+            backgroundColor: theme.palette.common.black,
+            color: theme.palette.common.white,
+        },
+    });
+})(TableCell);
+
+const StickyBlackTableCell = withStyles(() => {
+    return createStyles({
+        body: {
+            position: 'absolute',
+            left: 0,
+            top: 'auto',
+            width: '100px',
+            padding: '16px 0',
+            textAlign: 'center',
+            fontWeight: 500,
+        },
+    });
+})(BlackTableCell);
+
+const StickyTableHeaderCell = withStyles(() => {
+    return createStyles({
+        head: {
+            position: 'absolute',
+            left: 0,
+            top: 'auto',
+            border: 'none',
+            width: '100px',
+            padding: '16px 0',
+        },
+    });
+})(TableCell);
 
 const tableHeadRow = (repCounts: number[]): JSX.Element => {
     const repCountCells = repCounts
@@ -44,21 +86,12 @@ const tableHeadRow = (repCounts: number[]): JSX.Element => {
         .map(repCount => {
         const text = repCount !== 1 ? `${repCount} reps` : `${repCount} rep`;
 
-        return <TableCell key={`${repCount}-head-cell`}>{text}</TableCell>;
+        return <BlackTableCell key={`${repCount}-head-cell`}>{text}</BlackTableCell>;
     });
-
-    const stickyColumnstyle: React.CSSProperties = {
-        position: 'absolute',
-        left: 0,
-        top: 'auto',
-        border: 'none',
-        width: '100px',
-        padding: '16px 0',
-    };
 
     return (
         <TableRow>
-            <TableCell key="blank-head-cell" style={stickyColumnstyle} />
+            <StickyTableHeaderCell key="blank-head-cell" />
             {repCountCells}
         </TableRow>
     );
@@ -67,15 +100,6 @@ const tableHeadRow = (repCounts: number[]): JSX.Element => {
 const tableBodyRow = (rpe: number, repCounts: number[], results: RPETableItem[]): JSX.Element => {
     // @todo later weight unit will be changeable
     const unit = 'kgs';
-    const stickyColumnstyle: React.CSSProperties = {
-        position: 'absolute',
-        left: 0,
-        top: 'auto',
-        width: '100px',
-        padding: '16px 0',
-        textAlign: 'center',
-        fontWeight: 500,
-    };
 
     const cells = repCounts
         .sort((a, b) => a - b)
@@ -94,7 +118,7 @@ const tableBodyRow = (rpe: number, repCounts: number[], results: RPETableItem[])
 
     return (
         <TableRow>
-            <TableCell style={stickyColumnstyle} key={`rpe-${rpe}-ref`}>{rpe} RPE</TableCell>
+            <StickyBlackTableCell key={`rpe-${rpe}-ref`}>{rpe} RPE</StickyBlackTableCell>
             {cells}
         </TableRow>
     );
