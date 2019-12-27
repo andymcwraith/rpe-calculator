@@ -1,10 +1,9 @@
 import * as React from 'react';
 
 import Layout from '../components/Layout';
+import TitleBar from '../components/TitleBar';
 import rpeTable from '../lib/rpeTable';
 import { RPETableItem } from '../types';
-
-import './App.css';
 
 interface State {
     weight: string;
@@ -69,9 +68,7 @@ class App extends React.PureComponent<{}, State> {
     render(): React.ReactNode {
         return (
             <div className="app">
-                <header className="app-header">
-                    <p>RPE Calculator</p>
-                </header>
+                <TitleBar />
                 <Layout
                     weight={this.state.weight}
                     reps={this.state.reps}

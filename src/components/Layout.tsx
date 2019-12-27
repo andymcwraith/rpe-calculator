@@ -1,14 +1,13 @@
 import * as React from 'react';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
 
 import RepsInput from './RepsInput';
 import RpeInput from './RpeInput';
 import WeightInput from './WeightInput';
 import ResultsTable from './ResultsTable';
 import { RPETableItem } from '../types';
-
-import './Layout.css';
 
 interface Props {
     weight: string;
@@ -20,10 +19,18 @@ interface Props {
     rpeInputChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
+const useStyles = makeStyles({
+    layout: {
+        marginTop: '1rem',
+    },
+});
+
 const Layout: React.FC<Props> = props => {
+    const classes = useStyles();
+    
     return (
         <Container maxWidth="md">
-            <Grid className="layout" container={true} justify="center" alignItems="center">
+            <Grid className={classes.layout} container={true} justify="center" alignItems="center">
                 <Grid item={true} xs={12} md={4}>
                     <WeightInput value={props.weight} onChangeHandler={props.weightInputChangeHandler} />
                 </Grid>
