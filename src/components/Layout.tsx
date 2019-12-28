@@ -7,13 +7,14 @@ import RepsInput from './RepsInput';
 import RpeInput from './RpeInput';
 import WeightInput from './WeightInput';
 import ResultsTable from './ResultsTable';
-import { RPETableItem } from '../types';
+import { RPETableItem, WeightUnit } from '../types';
 
 interface Props {
     weight: string;
     reps: string;
     rpe: string;
     results: RPETableItem[];
+    weightUnit: WeightUnit;
     weightInputChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
     repsInputChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
     rpeInputChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -32,7 +33,11 @@ const Layout: React.FC<Props> = props => {
         <Container maxWidth="md">
             <Grid className={classes.layout} container={true} justify="center" alignItems="center">
                 <Grid item={true} xs={12} md={4}>
-                    <WeightInput value={props.weight} onChangeHandler={props.weightInputChangeHandler} />
+                    <WeightInput
+                        value={props.weight}
+                        unit={props.weightUnit}
+                        onChangeHandler={props.weightInputChangeHandler}
+                    />
                 </Grid>
                 <Grid item={true} xs={12} md={4}>
                     <RepsInput value={props.reps} onChangeHandler={props.repsInputChangeHandler} />
@@ -41,7 +46,7 @@ const Layout: React.FC<Props> = props => {
                     <RpeInput value={props.rpe} onChangeHandler={props.rpeInputChangeHandler} />
                 </Grid>
                 <Grid item={true} xs={12}>
-                    <ResultsTable results={props.results} />
+                    <ResultsTable results={props.results} weightUnit={props.weightUnit} />
                 </Grid>
             </Grid>
         </Container>

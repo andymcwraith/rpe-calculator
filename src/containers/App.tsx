@@ -3,13 +3,14 @@ import * as React from 'react';
 import Layout from '../components/Layout';
 import TitleBar from '../components/TitleBar';
 import rpeTable from '../lib/rpeTable';
-import { RPETableItem } from '../types';
+import { RPETableItem, WeightUnit } from '../types';
 
 interface State {
     weight: string;
     reps: string;
     rpe: string;
     results: RPETableItem[];
+    weightUnit: WeightUnit;
 }
 
 class App extends React.PureComponent<{}, State> {
@@ -21,8 +22,10 @@ class App extends React.PureComponent<{}, State> {
             reps: '',
             rpe: '',
             results: [],
+            weightUnit: 'kg',
         };
 
+        this.handleWeightUnitChange = this.handleWeightUnitChange.bind(this);
         this.handleWeightInputChange = this.handleWeightInputChange.bind(this);
         this.handleRepsInputChange = this.handleRepsInputChange.bind(this);
         this.handleRpeInputChange = this.handleRpeInputChange.bind(this);
@@ -53,6 +56,12 @@ class App extends React.PureComponent<{}, State> {
         this.setState({ ...this.state, results, rpe: value });
     }
 
+    handleWeightUnitChange(e: React.ChangeEvent<{ value: unknown }>): void {
+        console.log(e.target.value);
+
+        this.setState({ ...this.state, weightUnit: e.target.value as WeightUnit });
+    }
+
     results(weight: string, reps: string, rpe: string): RPETableItem[] {
         const weightNum = parseFloat(weight);
         const repsNum = parseFloat(reps);
@@ -68,12 +77,16 @@ class App extends React.PureComponent<{}, State> {
     render(): React.ReactNode {
         return (
             <div className="app">
-                <TitleBar />
+                <TitleBar
+                    weightUnit={this.state.weightUnit}
+                    weightUnitChangeHandler={this.handleWeightUnitChange}
+                />
                 <Layout
                     weight={this.state.weight}
                     reps={this.state.reps}
                     rpe={this.state.rpe}
                     results={this.state.results}
+                    weightUnit={this.state.weightUnit}
                     weightInputChangeHandler={this.handleWeightInputChange}
                     repsInputChangeHandler={this.handleRepsInputChange}
                     rpeInputChangeHandler={this.handleRpeInputChange}

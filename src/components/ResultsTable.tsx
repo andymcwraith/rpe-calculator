@@ -6,10 +6,11 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { createStyles, makeStyles, withStyles, Theme } from '@material-ui/core/styles'
 
-import { RPETableItem } from '../types';
+import { RPETableItem, WeightUnit } from '../types';
 
 interface Props {
     results: RPETableItem[];
+    weightUnit: WeightUnit;
 }
 
 const getLoad = (rpe: number, reps: number, results: RPETableItem[]): number | null => {
@@ -97,9 +98,8 @@ const tableHeadRow = (repCounts: number[]): JSX.Element => {
     );
 };
 
-const tableBodyRow = (rpe: number, repCounts: number[], results: RPETableItem[]): JSX.Element => {
-    // @todo later weight unit will be changeable
-    const unit = 'kgs';
+const tableBodyRow = (rpe: number, repCounts: number[], results: RPETableItem[], weightUnit: WeightUnit): JSX.Element => {
+    const unit = weightUnit === 'kg' ? 'kgs' : 'lbs';
 
     const cells = repCounts
         .sort((a, b) => a - b)
@@ -125,7 +125,7 @@ const tableBodyRow = (rpe: number, repCounts: number[], results: RPETableItem[])
 };
 
 const ResultsTable: React.FC<Props> = props => {
-    const { results } = props;
+    const { results, weightUnit } = props;
 
     const classes = useStyles();
 
@@ -136,7 +136,7 @@ const ResultsTable: React.FC<Props> = props => {
         const tableBodyRows = rpeArray
             .sort((a, b) => a - b)
             .reverse()
-            .map(rpe => tableBodyRow(rpe, repsArray, results));
+            .map(rpe => tableBodyRow(rpe, repsArray, results, weightUnit));
 
         return (
             <div className={classes.tableContainer}>

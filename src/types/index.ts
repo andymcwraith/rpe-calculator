@@ -3,3 +3,5 @@ export interface RPETableItem {
     reps: number;
     rpe: number;
 }
+
+export type WeightUnit = 'kg' | 'pound';
