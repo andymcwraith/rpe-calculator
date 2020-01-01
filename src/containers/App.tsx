@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import Layout from '../components/Layout';
+import OptionsDrawer from '../components/OptionsDrawer';
 import TitleBar from '../components/TitleBar';
 import rpeTable from '../lib/rpeTable';
 import { RPETableItem, WeightUnit } from '../types';
@@ -11,6 +12,7 @@ interface State {
     rpe: string;
     results: RPETableItem[];
     weightUnit: WeightUnit;
+    openDrawer: boolean;
 }
 
 class App extends React.PureComponent<{}, State> {
@@ -23,8 +25,11 @@ class App extends React.PureComponent<{}, State> {
             rpe: '',
             results: [],
             weightUnit: 'kg',
+            openDrawer: false,
         };
 
+        this.handleCloseDrawer = this.handleCloseDrawer.bind(this);
+        this.handleOpenDrawer = this.handleOpenDrawer.bind(this);
         this.handleWeightUnitChange = this.handleWeightUnitChange.bind(this);
         this.handleWeightInputChange = this.handleWeightInputChange.bind(this);
         this.handleRepsInputChange = this.handleRepsInputChange.bind(this);
@@ -57,10 +62,16 @@ class App extends React.PureComponent<{}, State> {
     }
 
     handleWeightUnitChange(e: React.ChangeEvent<{ value: unknown }>): void {
-        console.log(e.target.value);
-
         this.setState({ ...this.state, weightUnit: e.target.value as WeightUnit });
     }
+
+    handleOpenDrawer(): void {
+        this.setState({ ...this.state, openDrawer: true });
+    };
+
+    handleCloseDrawer(): void {
+        this.setState({ ...this.state, openDrawer: false });
+    };
 
     results(weight: string, reps: string, rpe: string): RPETableItem[] {
         const weightNum = parseFloat(weight);
@@ -80,6 +91,11 @@ class App extends React.PureComponent<{}, State> {
                 <TitleBar
                     weightUnit={this.state.weightUnit}
                     weightUnitChangeHandler={this.handleWeightUnitChange}
+                    openDrawerHandler={this.handleOpenDrawer}
+                />
+                <OptionsDrawer
+                    isOpen={this.state.openDrawer}
+                    closeDrawerHandler={this.handleCloseDrawer}
                 />
                 <Layout
                     weight={this.state.weight}

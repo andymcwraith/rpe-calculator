@@ -4,12 +4,14 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
+import OptionsDrawerButton from './OptionsDrawerButton';
 import UnitSelector from './UnitSelector';
 import { WeightUnit } from '../types';
 
 interface Props {
     weightUnit: WeightUnit;
     weightUnitChangeHandler: (e: React.ChangeEvent<{ value: unknown }>) => void;
+    openDrawerHandler: () => void;
 };
 
 const useStyles = makeStyles({
@@ -19,7 +21,7 @@ const useStyles = makeStyles({
     title: {
         color: '#ffffff',
     },
-    unitSelectorContainer: {
+    optionsContainer: {
         marginLeft: 'auto',
     },
 });
@@ -31,11 +33,12 @@ const ActionBar: React.FC<Props> = props => {
         <AppBar position="static">
             <Toolbar className={classes.toolbar}>
                 <Typography variant="h6" className={classes.title}>RPE Calculator</Typography>
-                <div className={classes.unitSelectorContainer}>
+                <div className={classes.optionsContainer}>
                     <UnitSelector
                         unit={props.weightUnit}
                         changeHandler={props.weightUnitChangeHandler}
                     />
+                    <OptionsDrawerButton onClickHandler={props.openDrawerHandler} />
                 </div>
             </Toolbar>
         </AppBar>
