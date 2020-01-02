@@ -2,7 +2,7 @@ import * as React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
 import OptionsDrawerButton from './OptionsDrawerButton';
 import UnitSelector from './UnitSelector';
@@ -14,17 +14,17 @@ interface Props {
     openDrawerHandler: () => void;
 };
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme: Theme) => createStyles({
     toolbar: {
-        backgroundColor: '#282c34',
+        backgroundColor: theme.palette.primary.main,
     },
     title: {
-        color: '#ffffff',
+        color: theme.palette.primary.contrastText,
     },
     optionsContainer: {
         marginLeft: 'auto',
     },
-});
+}));
 
 const ActionBar: React.FC<Props> = props => {
     const classes = useStyles();

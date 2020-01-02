@@ -5,7 +5,7 @@ import Drawer from '@material-ui/core/Drawer';
 import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import { makeStyles } from '@material-ui/core/styles';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
 // @todo considerations for mobile view
 
@@ -14,21 +14,21 @@ interface Props {
     closeDrawerHandler: () => void;
 };
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme: Theme) => createStyles({
     drawerContents: {
         height: '100%',
         width: '100%',
-        backgroundColor: '#282c34',
-        color: '#ffffff',
+        backgroundColor: theme.palette.primary.main,
+        color: theme.palette.primary.contrastText,
     },
     drawerCloseButton: {
-        color: '#ffffff',
+        color: theme.palette.primary.contrastText,
     },
     drawerHeader: {
-        backgroundColor: '#282c34',
-        color: '#ffffff',
+        backgroundColor: theme.palette.primary.main,
+        color: theme.palette.primary.contrastText,
     },
-});
+}));
 
 const OptionsDrawer: React.FC<Props> = props => {
     const classes = useStyles();
@@ -49,7 +49,9 @@ const OptionsDrawer: React.FC<Props> = props => {
             </div>
             <Divider />
             <List className={classes.drawerContents}>
-                <ListItem>Contents</ListItem>
+                <ListItem>
+                    Contents
+                </ListItem>
             </List>
         </Drawer>
     );
