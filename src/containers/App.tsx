@@ -13,6 +13,10 @@ interface State {
     results: RPETableItem[];
     weightUnit: WeightUnit;
     openDrawer: boolean;
+    repMin: number;
+    repMax: number;
+    rpeMin: number;
+    rpeMax: number;
 }
 
 class App extends React.PureComponent<{}, State> {
@@ -26,6 +30,10 @@ class App extends React.PureComponent<{}, State> {
             results: [],
             weightUnit: 'kg',
             openDrawer: false,
+            repMin: 1,
+            repMax: 12,
+            rpeMin: 6,
+            rpeMax: 10,
         };
 
         this.handleCloseDrawer = this.handleCloseDrawer.bind(this);
@@ -34,6 +42,8 @@ class App extends React.PureComponent<{}, State> {
         this.handleWeightInputChange = this.handleWeightInputChange.bind(this);
         this.handleRepsInputChange = this.handleRepsInputChange.bind(this);
         this.handleRpeInputChange = this.handleRpeInputChange.bind(this);
+        this.handleRepRangeChange = this.handleRepRangeChange.bind(this);
+        this.handleRpeRangeChange = this.handleRpeRangeChange.bind(this);
         this.results = this.results.bind(this);
     }
 
@@ -63,6 +73,18 @@ class App extends React.PureComponent<{}, State> {
 
     handleWeightUnitChange(e: React.ChangeEvent<{ value: unknown }>): void {
         this.setState({ ...this.state, weightUnit: e.target.value as WeightUnit });
+    }
+
+    handleRepRangeChange(e: React.ChangeEvent<{}>, value: number | number[]): void {
+        if (Array.isArray(value) && value.length === 2) {
+            this.setState({ ...this.state, repMin: value[0], repMax: value[1] });
+        }
+    }
+
+    handleRpeRangeChange(e: React.ChangeEvent<{}>, value: number | number[]): void {
+        if (Array.isArray(value) && value.length === 2) {
+            this.setState({ ...this.state, rpeMin: value[0], rpeMax: value[1] });
+        }
     }
 
     handleOpenDrawer(): void {
@@ -95,7 +117,13 @@ class App extends React.PureComponent<{}, State> {
                 />
                 <OptionsDrawer
                     isOpen={this.state.openDrawer}
+                    repMin={this.state.repMin}
+                    repMax={this.state.repMax}
+                    rpeMin={this.state.rpeMin}
+                    rpeMax={this.state.rpeMax}
                     closeDrawerHandler={this.handleCloseDrawer}
+                    repRangeChangeHandler={this.handleRepRangeChange}
+                    rpeRangeChangeHandler={this.handleRpeRangeChange}
                 />
                 <Layout
                     weight={this.state.weight}
