@@ -14,12 +14,9 @@ const useStyles = makeStyles({
         width: '100%',
     },
     label: {
-        // color: '#ffffff',
         marginBottom: '2.5em',
     },
-    slider: {
-        // color: '#ffffff',
-    },
+    slider: {},
 });
 
 const RepRangeSlider: React.FC<Props> = props => {

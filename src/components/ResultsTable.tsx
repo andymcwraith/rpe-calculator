@@ -6,11 +6,16 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { createStyles, makeStyles, withStyles, Theme } from '@material-ui/core/styles'
 
+import numberRange from '../lib/numberRange';
 import { RPETableItem, WeightUnit } from '../types';
 
 interface Props {
     results: RPETableItem[];
     weightUnit: WeightUnit;
+    displayedRepMin: number;
+    displayedRepMax: number;
+    displayedRpeMin: number;
+    displayedRpeMax: number;
 }
 
 const getLoad = (rpe: number, reps: number, results: RPETableItem[]): number | null => {
@@ -125,13 +130,20 @@ const tableBodyRow = (rpe: number, repCounts: number[], results: RPETableItem[],
 };
 
 const ResultsTable: React.FC<Props> = props => {
-    const { results, weightUnit } = props;
+    const {
+        displayedRepMin,
+        displayedRepMax,
+        displayedRpeMin,
+        displayedRpeMax,
+        results,
+        weightUnit,
+    } = props;
 
     const classes = useStyles();
 
     if (results.length > 0) {
-        const repsArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-        const rpeArray = [6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10];
+        const repsArray = numberRange(displayedRepMin, displayedRepMax, 1);
+        const rpeArray = numberRange(displayedRpeMin, displayedRpeMax, 0.5);
 
         const tableBodyRows = rpeArray
             .sort((a, b) => a - b)

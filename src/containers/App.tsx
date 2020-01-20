@@ -126,6 +126,10 @@ class App extends React.PureComponent<{}, State> {
                     rpeRangeChangeHandler={this.handleRpeRangeChange}
                 />
                 <Layout
+                    displayedRepMin={this.state.repMin}
+                    displayedRepMax={this.state.repMax}
+                    displayedRpeMin={this.state.rpeMin}
+                    displayedRpeMax={this.state.rpeMax}
                     weight={this.state.weight}
                     reps={this.state.reps}
                     rpe={this.state.rpe}

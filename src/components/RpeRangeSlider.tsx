@@ -14,12 +14,9 @@ const useStyles = makeStyles({
         width: '100%',
     },
     label: {
-        // color: '#ffffff',
         marginBottom: '2.5em',
     },
-    slider: {
-        // color: '#ffffff',
-    },
+    slider: {},
 });
 
 const RpeRangeSlider: React.FC<Props> = props => {
@@ -42,7 +39,7 @@ const RpeRangeSlider: React.FC<Props> = props => {
                 onChange={props.changeHandler}
                 min={6}
                 max={10}
-                step={1}
+                step={0.5}
                 valueLabelDisplay="on"
                 marks
             />

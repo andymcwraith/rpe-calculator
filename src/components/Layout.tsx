@@ -10,6 +10,10 @@ import ResultsTable from './ResultsTable';
 import { RPETableItem, WeightUnit } from '../types';
 
 interface Props {
+    displayedRepMin: number;
+    displayedRepMax: number;
+    displayedRpeMin: number;
+    displayedRpeMax: number;
     weight: string;
     reps: string;
     rpe: string;
@@ -46,7 +50,14 @@ const Layout: React.FC<Props> = props => {
                     <RpeInput value={props.rpe} onChangeHandler={props.rpeInputChangeHandler} />
                 </Grid>
                 <Grid item={true} xs={12}>
-                    <ResultsTable results={props.results} weightUnit={props.weightUnit} />
+                    <ResultsTable
+                        displayedRepMin={props.displayedRepMin}
+                        displayedRepMax={props.displayedRepMax}
+                        displayedRpeMin={props.displayedRpeMin}
+                        displayedRpeMax={props.displayedRpeMax}
+                        results={props.results}
+                        weightUnit={props.weightUnit}
+                    />
                 </Grid>
             </Grid>
         </Container>
